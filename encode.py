@@ -4,7 +4,7 @@ import pickle
 import sys
 from contextlib import nullcontext
 from huggingface_hub import login
-login(token="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")
+login(token="TOKEN HERE")
 
 import nltk
 import numpy as np
