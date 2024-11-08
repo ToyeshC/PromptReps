@@ -3,7 +3,10 @@ import os
 import pickle
 import sys
 from contextlib import nullcontext
+from huggingface_hub import login
+login(token="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")
 
+import nltk
 import numpy as np
 from tqdm import tqdm
 
@@ -22,6 +25,8 @@ from arguments import PromptRepsDataArguments
 from tevatron.retriever.modeling import EncoderOutput
 from modeling import PromptRepsLLM
 from nltk import word_tokenize
+nltk.download('stopwords')
+nltk.download('punkt_tab')
 from nltk.corpus import stopwords
 import string
 stopwords = set(stopwords.words('english') + list(string.punctuation))
