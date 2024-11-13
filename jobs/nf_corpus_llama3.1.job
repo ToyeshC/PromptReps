@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu
+#SBATCH --gpus=1
+#SBATCH --job-name=nf_corpus_encode_baseline
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=18
+#SBATCH --time=01:00:00
+#SBATCH --output=jobs/outputs/nf_corpus_baseline.out
+
+module purge
+module load 2022
+cd $HOME/PromptReps
+source p_rep/bin/activate
+
+BASE_MODEL=meta-llama/Meta-Llama-3.1-8B-Instruct
+DATASET=nfcorpus
+OUTPUT_DIR=outputs/${BASE_MODEL}/
+
+python encode.py \
+        --output_dir=nf_corpus_llama3.1 \
+        --model_name_or_path ${BASE_MODEL} \
+        --tokenizer_name ${BASE_MODEL} \
+        --per_device_eval_batch_size 64 \
+        --passage_max_len 512 \
+        --normalize \
+        --bf16 \
+        --dataset_name Tevatron/beir-corpus \
+        --dataset_config ${DATASET} \
+        --dense_output_dir ${OUTPUT_DIR}/beir/${DATASET}/dense \
+        --sparse_output_dir ${OUTPUT_DIR}/beir/${DATASET}/sparse \
+        --passage_prefix prompts/${BASE_MODEL}/passage_prefix.txt \
+        --passage_suffix prompts/${BASE_MODEL}/passage_suffix.txt \
+        --cache_dir cache_models \
+        --dataset_cache_dir cache_datasets \
+        --dataset_number_of_shards 1 \
+        --dataset_shard_index 0

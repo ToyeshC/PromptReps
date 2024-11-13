@@ -80,6 +80,7 @@ class PromptRepsTrainDataset(Dataset):
                 data_files=self.data_args.dataset_path,
                 split=self.data_args.dataset_split,
                 cache_dir=self.data_args.dataset_cache_dir,
+                trust_remote_code=True
             )
 
         self.trainer = trainer
