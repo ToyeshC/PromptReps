@@ -14,11 +14,11 @@ cd $HOME/PromptReps
 source p_rep/bin/activate
 
 BASE_MODEL=meta-llama/Meta-Llama-3.1-8B-Instruct
-DATASET=msmarco
+DATASET=fever
 OUTPUT_DIR=outputs/${BASE_MODEL}/
 
 python encode.py \
-        --output_dir=msmarco_llama3.1 \
+        --output_dir=fever_llama3.1 \
         --model_name_or_path ${BASE_MODEL} \
         --tokenizer_name ${BASE_MODEL} \
         --per_device_eval_batch_size 64 \
