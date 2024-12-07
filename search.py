@@ -159,7 +159,6 @@ def main():
         normalize=model_args.normalize,
         lora_name_or_path=model_args.lora_name_or_path,
         cache_dir=model_args.cache_dir,
-        trust_remote_code=True,
         torch_dtype=torch_dtype,
         num_pooled_tokens=data_args.num_pooled_tokens,
         multi_reps=data_args.multi_reps,

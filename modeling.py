@@ -38,6 +38,7 @@ class PromptRepsLLM(EncoderModel):
                  word_level_reps: bool = False
                  ):
         super().__init__(encoder, pooling, normalize, temperature)
+        self.dense_extraction_depth = dense_extraction_depth
         self.tokenizer = tokenizer
         self.num_pooled_tokens = num_pooled_tokens
         self.multi_reps = multi_reps
@@ -51,6 +52,7 @@ class PromptRepsLLM(EncoderModel):
              lora_name_or_path: str = None,
              num_pooled_tokens: int = 0,
              multi_reps: bool = False,
+             dense_extraction_depth: int = 1,
              word_level_reps: bool = False,
              **hf_kwargs):
         base_model = cls.TRANSFORMER_CLS.from_pretrained(model_name_or_path,
@@ -203,8 +205,8 @@ class PromptRepsLLM(EncoderModel):
             next_token_logits = logits[batch_ids, sequence_lengths]
             next_token_logits = torch.log(1 + torch.relu(next_token_logits))
 
-            # next token hidden states
-            next_token_reps = outputs.hidden_states[-1][batch_ids, sequence_lengths]
+            # next token hidden states andreas
+            next_token_reps = outputs.hidden_states[-self.dense_extraction_depth][batch_ids, sequence_lengths]
 
         if self.normalize:
             next_token_reps = torch.nn.functional.normalize(next_token_reps, p=2, dim=-1)

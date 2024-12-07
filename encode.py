@@ -25,8 +25,8 @@ from arguments import PromptRepsDataArguments
 from tevatron.retriever.modeling import EncoderOutput
 from modeling import PromptRepsLLM
 from nltk import word_tokenize
-nltk.download('stopwords')
-nltk.download('punkt_tab')
+# nltk.download('stopwords')
+# nltk.download('punkt_tab')
 from nltk.corpus import stopwords
 import string
 stopwords = set(stopwords.words('english') + list(string.punctuation))
@@ -93,7 +93,8 @@ def main():
 
     tokenizer = AutoTokenizer.from_pretrained(
         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
-        cache_dir=model_args.cache_dir
+        cache_dir=model_args.cache_dir,
+        force_download=True
     )
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
@@ -117,6 +118,7 @@ def main():
         lora_name_or_path=model_args.lora_name_or_path,
         cache_dir=model_args.cache_dir,
         trust_remote_code=True,
+        dense_extraction_depth=model_args.dense_extraction_depth,
         torch_dtype=torch_dtype,
         num_pooled_tokens=data_args.num_pooled_tokens,
         multi_reps=data_args.multi_reps,
