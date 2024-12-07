@@ -38,7 +38,6 @@ class PromptRepsLLM(EncoderModel):
                  word_level_reps: bool = False
                  ):
         super().__init__(encoder, pooling, normalize, temperature)
-        self.dense_extraction_depth = dense_extraction_depth
         self.tokenizer = tokenizer
         self.num_pooled_tokens = num_pooled_tokens
         self.multi_reps = multi_reps
