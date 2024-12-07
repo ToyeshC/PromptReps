@@ -35,6 +35,7 @@ class PromptRepsLLM(EncoderModel):
                  tokenizer=None,
                  num_pooled_tokens: int = 0,
                  multi_reps=False,
+                 dense_extraction_depth: int = 1,
                  word_level_reps: bool = False
                  ):
         super().__init__(encoder, pooling, normalize, temperature)
@@ -42,6 +43,7 @@ class PromptRepsLLM(EncoderModel):
         self.num_pooled_tokens = num_pooled_tokens
         self.multi_reps = multi_reps
         self.word_level_reps = word_level_reps
+        self.dense_extraction_depth = dense_extraction_depth
 
     @classmethod
     def load(cls,

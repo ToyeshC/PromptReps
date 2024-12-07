@@ -39,6 +39,13 @@ class PromptRepsDataArguments(DataArguments):
                 self.passage_suffix = f.read().strip()
 
 
+#NEW created by me
+@dataclass
+class PromptRepsModelArguments(ModelArguments):
+    dense_extraction_depth: int = field(
+        default=1,
+        metadata={"help": "layer number to get dense representation from counting back to front (0 is last layer)"}
+    )
 
 @dataclass
 class PromptRepsTrainingArguments(TevatronTrainingArguments):
